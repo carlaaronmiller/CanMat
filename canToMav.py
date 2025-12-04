@@ -35,8 +35,12 @@ CBDecoders = {#Functions to decode canbus messages based of sender ID.
     },
 
     0x103: lambda d: {
-        "CBThrIN": d[0],
-    },
+        "CBThrIN": int(
+            round(
+                3.0246 + 1.06 * (2.71 ** (0.045871 * (d[0] * 0.39215686275))),
+                0
+            )
+        ),
 
     0x122: lambda d: {
         "CBRPM": (int.from_bytes(d[0:2],byteorder="big") * 0.25) - 1605.75 , #BE two byte value, scaled up by x4.
